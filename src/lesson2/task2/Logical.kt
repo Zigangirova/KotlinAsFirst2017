@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson2.task2
 
 import lesson1.task1.sqr
@@ -18,7 +19,7 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
 fun isNumberHappy(number: Int): Boolean {
-    return ((number/1000 + (number/100)%10) == (number%10 + (number%100)/10))
+    return ((number / 1000 + (number / 100) % 10) == (number % 10 + (number % 100) / 10))
 }
 
 /**
@@ -43,8 +44,8 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
                  x2: Double, y2: Double, r2: Double): Boolean {
     val a = x2 - x1
     val b = y2 - y1
-    val l = Math.sqrt(Math.pow (a, 2.0) + Math.pow(b, 2.0))
-      return (r1 <= r2 - l)
+    val l = Math.sqrt(Math.pow(a, 2.0) + Math.pow(b, 2.0))
+    return (r1 <= r2 - l)
 }
 
 /**
@@ -59,11 +60,11 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     val p = Math.min(a, b)
     val q = Math.max(a, b)
-     val l = Math.min(p, c)
-     val v = Math.max(q, c)
-     val h = a + b + c - l - v
-        val pL = Math.min(r, s)
-        val pH = Math.max(r, s)
-          return ((l <= pL) && (h <= pH))
+    val l = Math.min(p, c)
+    val v = Math.max(q, c)
+    val h = a + b + c - l - v
+    val pL = Math.min(r, s)
+    val pH = Math.max(r, s)
+    return ((l <= pL) && (h <= pH))
 }
 

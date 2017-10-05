@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson2.task1
 
 import lesson1.task1.discriminant
@@ -33,14 +34,14 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String  {
+fun ageDescription(age: Int): String {
     return when {
         (age % 100 in 5..20) -> "$age лет"
         (age % 10 == 1) -> "$age год"
         (age % 10 in 2..4) -> "$age года"
         else -> "$age лет"
-        }
     }
+}
 
 /**
  * Простая
@@ -56,17 +57,17 @@ fun timeForHalfWay(t1: Double, v1: Double,
     val s2 = t2 * v2
     val s3 = t3 * v3
     val sH = (s1 + s2 + s3) / 2
-     if ((s1 != 0.0) || (s2 != 0.0) || (s3 != 0.0))
-         return when {
-             sH == s1 -> t1
-             sH < s1 -> sH/v1
-             (sH == s1 + s2) -> t1 + t2
-             (sH < s1 + s2) -> t1 + (sH - s1)/v2
-             ((sH == s3) && (s1 == 0.0) && (s2 == 0.0)) -> t3
-             ((sH < s3) && (s1 == 0.0) && (s2 == 0.0)) -> sH/v3
-             else -> t1 + t2 + (sH - s1 - s2)/v3
-         }
-     else return Double.NaN
+    if ((s1 != 0.0) || (s2 != 0.0) || (s3 != 0.0))
+        return when {
+            sH == s1 -> t1
+            sH < s1 -> sH / v1
+            (sH == s1 + s2) -> t1 + t2
+            (sH < s1 + s2) -> t1 + (sH - s1) / v2
+            ((sH == s3) && (s1 == 0.0) && (s2 == 0.0)) -> t3
+            ((sH < s3) && (s1 == 0.0) && (s2 == 0.0)) -> sH / v3
+            else -> t1 + t2 + (sH - s1 - s2) / v3
+        }
+    else return Double.NaN
 }
 
 /**
@@ -88,8 +89,6 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
         else -> 0
     }
 }
-
-
 
 
 /**
@@ -125,11 +124,13 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
     fun sqr(x: Double) = x * x
-    if ((a > b + c) || (b > a + c) || (c > a + b)) return -1
-    else if ((sqr(a) == sqr(b) + sqr (c)) || (sqr(b) == sqr(a) + sqr (c)) || (sqr(c) == sqr(b) + sqr (a))) return 1
-    else if ((sqr(a) > sqr(b) + sqr (c)) || (sqr(b) > sqr(a) + sqr (c)) || (sqr(c) > sqr(b) + sqr (a))) return 2
-    else  return 0
- }
+    return when {
+        ((a > b + c) || (b > a + c) || (c > a + b)) -> -1
+        ((sqr(a) == sqr(b) + sqr(c)) || (sqr(b) == sqr(a) + sqr(c)) || (sqr(c) == sqr(b) + sqr(a))) -> 1
+        ((sqr(a) > sqr(b) + sqr(c)) || (sqr(b) > sqr(a) + sqr(c)) || (sqr(c) > sqr(b) + sqr(a))) -> 2
+        else -> 0
+    }
+}
 
 /**
  * Средняя
