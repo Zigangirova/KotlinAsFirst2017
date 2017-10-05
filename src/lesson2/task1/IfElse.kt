@@ -124,7 +124,7 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
     fun sqr(x: Double) = x * x
-    return when {
+     return when {
         ((a > b + c) || (b > a + c) || (c > a + b)) -> -1
         ((sqr(a) == sqr(b) + sqr(c)) || (sqr(b) == sqr(a) + sqr(c)) || (sqr(c) == sqr(b) + sqr(a))) -> 1
         ((sqr(a) > sqr(b) + sqr(c)) || (sqr(b) > sqr(a) + sqr(c)) || (sqr(c) > sqr(b) + sqr(a))) -> 2
