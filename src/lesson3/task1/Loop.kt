@@ -77,8 +77,16 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = (Math.pow(((Math.sqrt(5.0) + 1) / 2), n / 1.0) / Math.sqrt(5.0) + 0.5).toInt()
-
+fun fib(n: Int): Int  {
+    var a = 1
+    var b = 1
+    for (i in 3..n) {
+        val m = b
+        b += a
+        a = m
+    }
+    return b
+}
 /**
  * Простая
  *
@@ -93,7 +101,7 @@ fun lcm(m: Int, n: Int): Int {
         if (a > b)
             a -= b
         else
-            a -= b
+            b -= a
     return p / a
 }
 
@@ -134,16 +142,8 @@ fun maxDivisor(n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    var cp = 0
-    if (m > n) cp = n else cp = m
-    if (cp != 1) {
-        for (i in 2..cp)
-            if ((n % i == 0) && (m % i == 0)) {
-                cp = 1; break
-            }
-    } else
-        cp = 0
-    return cp != 1
+    val nok = lcm(m, n)
+    return ((m * n) / nok == 1)
 }
 
 
