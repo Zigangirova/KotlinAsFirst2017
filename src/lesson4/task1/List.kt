@@ -151,7 +151,7 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  */
 fun times(a: List<Double>, b: List<Double>): Double {
     var n = 0.0
-    for (i in 0 until a.size ) {
+    for (i in 0 until a.size) {
         n += (a[i] * b[i])
     }
     return n
@@ -175,6 +175,7 @@ fun polynom(p: List<Double>, x: Double): Double {
     return sum
 }
 
+
 /**
  * Средняя
  *
@@ -185,7 +186,12 @@ fun polynom(p: List<Double>, x: Double): Double {
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun accumulate(list: MutableList<Double>): MutableList<Double> = TODO()
+fun accumulate(list: MutableList<Double>): MutableList<Double> {
+    for (i in 1 until list.size) {
+        list[i] = list[i] + list[i - 1]
+    }
+    return list
+}
 
 /**
  * Средняя
@@ -194,7 +200,19 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> = TODO()
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun factorize(n: Int): List<Int> = TODO()
+fun factorize(n: Int): List<Int> {
+    val a = mutableListOf<Int>()
+    var d = 2
+    var numbers = n
+    while (numbers > 1) {
+        if (numbers % d == 0) {
+            numbers /= d
+            a.add(d)
+        } else
+            d++
+    }
+    return a
+}
 
 /**
  * Сложная
@@ -202,7 +220,7 @@ fun factorize(n: Int): List<Int> = TODO()
  * Разложить заданное натуральное число n > 1 на простые множители.
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  */
-fun factorizeToString(n: Int): String = TODO()
+fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*")
 
 /**
  * Средняя
@@ -211,7 +229,16 @@ fun factorizeToString(n: Int): String = TODO()
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    var a = listOf<Int>()
+    var numbers = n
+    while (numbers / base != 0) {
+        a += (numbers % base)
+        numbers /= base
+    }
+    a += numbers
+    return a.reversed()
+}
 
 /**
  * Сложная
@@ -221,7 +248,16 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * строчными буквами: 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    var a = ""
+    val number = convert(n, base)
+    for (i in number) {
+        a += if (i > 9) 'a' + (i - 10)
+        else i
+    }
+    return a
+}
+
 
 /**
  * Средняя
@@ -230,7 +266,13 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int {
+    var n = 0
+    val list = digits.reversed()
+    for (elCount in 0 until digits.size)
+        n += list[elCount] * Math.pow(base.toDouble(), elCount.toDouble()).toInt()
+    return n
+}
 
 /**
  * Сложная
@@ -241,7 +283,14 @@ fun decimal(digits: List<Int>, base: Int): Int = TODO()
  * 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: str = "13c", base = 14 -> 250
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
+fun decimalFromString(str: String, base: Int): Int {
+    val a = mutableListOf<Int>()
+    for (i in 0 until str.length) {
+        if (str[i] in '0'..'9')
+            a.add(str[i] - '0') else a.add(str[i] - 'a' + 10)
+    }
+    return if (str.length == 1) a[0] else decimal(a, base)
+}
 
 /**
  * Сложная
@@ -251,7 +300,20 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    var number = n
+    var i = 0
+    val a = mutableListOf<String>()
+    val b = listOf(1000 to "M", 900 to "CM", 500 to "D", 400 to "CD", 100 to "C", 90 to "XC", 50 to "L",
+            40 to "XL", 10 to "X", 9 to "IX", 5 to "V", 4 to "IV", 1 to "I")
+    while (number > 0) {
+        if (b[i].first <= number) {
+            number -= b[i].first
+            a.add(b[i].second)
+        } else i++
+    }
+    return a.joinToString(separator = "")
+}
 
 /**
  * Очень сложная

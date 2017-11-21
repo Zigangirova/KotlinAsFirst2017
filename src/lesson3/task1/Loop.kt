@@ -77,15 +77,10 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int  {
-    var a = 1
-    var b = 1
-    for (i in 3..n) {
-        val m = b
-        b += a
-        a = m
-    }
-    return b
+fun fib(n: Int): Int {
+    val a = 1.0 / 2.0
+    val b = Math.sqrt(5.0) / 2.0
+    return((Math.pow(a + b, n.toDouble()) - Math.pow(a - b, n.toDouble())) / Math.sqrt(5.0)).toInt()
 }
 /**
  * Простая
@@ -111,13 +106,11 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var a = 1
-    for (d in 2..Math.ceil(Math.sqrt(n.toDouble())).toInt())
-        if (n % d == 0) {
-            a = d; break
+    for (d in 2..Math.ceil(Math.sqrt(n.toDouble())).toInt()){
+        if (n % d == 0)
+            return d
         }
-    if (a == 1) a = n
-    return a
+    return n
 }
 
 /**
@@ -154,11 +147,8 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean {
-    var a: Int = Math.sqrt(m.toDouble()).toInt()
-    if (a * a < m) a++
-    return a <= Math.sqrt(n.toDouble())
-}
+fun squareBetweenExists(m: Int, n: Int): Boolean = Math.ceil(Math.sqrt(m.toDouble())) <= Math.sqrt(n.toDouble())
+
 
 /**
  * Средняя
@@ -168,13 +158,14 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun sin(x: Double, eps: Double): Double {
-    var a = x
-    var b = 1
+    var count = 1
     var sin = x % (2 * Math.PI)
-    while (Math.abs(a) >= eps) {
-        a = -a * (x % (2 * Math.PI)) / ((b * 2 + 1) * (b * 2)).toDouble() * (x % (2 * Math.PI))
-        b += 1
-        sin += a
+    val sinConst = sin
+    var eq = sin
+    while (Math.abs(eq) >= eps) {
+        eq = -eq * sinConst / ((count * 2 + 1) * (count * 2)).toDouble() * sinConst
+        count += 1
+        sin += eq
     }
     return sin
 }
@@ -231,28 +222,7 @@ fun isPalindrome(n: Int): Boolean {
  * Для заданного числа n определить, содержит ли оно различающиеся цифры.
  * Например, 54 и 323 состоят из разных цифр, а 111 и 0 из одинаковых.
  */
-fun hasDifferentDigits(n: Int): Boolean {
-    var a = n
-    var b = 0
-    var l = 1
-    var k = 0
-    while (a >= 10) {
-        a /= 10; k += 1; l *= 10
-    }
-    a = k
-    var c = l
-    for (i in 1..k) {
-        c = l
-        for (j in 1..a) {
-            c = l / 10
-            b = n / c % 10
-            if (b != (n / l % 10)) return true
-        }
-        l /= 10
-        a -= 1
-    }
-    return false
-}
+fun hasDifferentDigits(n: Int): Boolean = digitCountInNumber(n, n % 10) != "$n".length
 
 /**
  * Сложная
@@ -265,7 +235,7 @@ fun squareSequenceDigit(n: Int): Int {
     var a = 1
     var b = n
     var sa: Int
-    var str: String = ""
+    var str = ""
     while (b > 0) {
         sa = a * a
         str = "$sa"
@@ -287,7 +257,7 @@ fun fibSequenceDigit(n: Int): Int {
     var a = 1
     var b = n
     var fib: Int
-    var str: String = ""
+    var str = ""
     while (b > 0) {
         fib = fib(a)
         str = "$fib"
