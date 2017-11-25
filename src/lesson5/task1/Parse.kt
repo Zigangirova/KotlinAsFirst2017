@@ -124,19 +124,19 @@ fun dateDigitToStr(digital: String): String {
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String {
-    val a = StringBuilder()
-    val s = listOf(" ", "+", "-", "(", ")")
+    val result = StringBuilder()
+    val symbols = listOf(" ", "+", "-", "(", ")")
     if (phone.indexOf("+") != -1) {
-        a.append("+")
+        result.append("+")
     }
     for (k in phone) {
         if (k.toString() in "0".."9") {
-            a.append(k)
-        } else if (k.toString() !in s) {
+            result.append(k)
+        } else if (k.toString() !in symbols) {
             return ""
         }
     }
-    return "$a"
+    return "$result"
 }
 
 
@@ -151,11 +151,11 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
-    val a = jumps.split(" ", "%", "-").toMutableList()
-    a.removeAll { it == "" }
+    val parts = jumps.split(" ", "%", "-").toMutableList()
+    parts.removeAll { it == "" }
     var max = -1
     try {
-        for (i in a) {
+        for (i in parts) {
             if (i.toInt() > max) max = i.toInt()
         }
     } catch (e: NumberFormatException) {
@@ -175,11 +175,11 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
-    val a = jumps.split(" ")
+    val parts = jumps.split(" ")
     var max = -1
-    for (part in 1 until a.size step 2) {
-        val b = a[part - 1].toInt()
-        for (j in a[part]) {
+    for (part in 1 until parts.size step 2) {
+        val b = parts[part - 1].toInt()
+        for (j in parts[part]) {
             if (j == '+' && max < b) max = b
         }
     }
@@ -195,7 +195,23 @@ fun bestHighJump(jumps: String): Int {
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    val equations = expression.split(" ")
+    var result = equations[0].toInt()
+    try {
+        for (i in 1 until equations.size step 2) {
+            val num = equations[i + 1].toInt()
+            result += when (equations[i]) {
+                "+" -> num
+                "-" -> -num
+                else -> throw IllegalArgumentException()
+            }
+        }
+        return result
+    } catch (result: NumberFormatException) {
+        throw IllegalArgumentException()
+    }
+}
 
 /**
  * Сложная
@@ -206,7 +222,16 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val string = str.toLowerCase().split(" ")
+    var index = 0
+    for (i in 0..string.size - 2) {
+        if (string[i] == string[i + 1]) return index
+        index += string[i].length + 1
+    }
+    return -1
+}
+
 
 /**
  * Сложная

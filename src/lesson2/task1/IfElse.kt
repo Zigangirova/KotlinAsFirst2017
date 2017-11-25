@@ -57,14 +57,14 @@ fun timeForHalfWay(t1: Double, v1: Double,
     val s2 = t2 * v2
     val s3 = t3 * v3
     val sH = (s1 + s2 + s3) / 2
-        return when {
-            sH == s1 -> t1
-            sH < s1 -> sH / v1
-            (sH == s1 + s2) -> t1 + t2
-            (sH < s1 + s2) -> t1 + (sH - s1) / v2
-            (s1 + s2 + s3 == sH) -> t1 + t2 + t3
-            else -> t1 + t2 + (sH - s1 - s2) / v3
-        }
+    return when {
+        sH == s1 -> t1
+        sH < s1 -> sH / v1
+        (sH == s1 + s2) -> t1 + t2
+        (sH < s1 + s2) -> t1 + (sH - s1) / v2
+        (s1 + s2 + s3 == sH) -> t1 + t2 + t3
+        else -> t1 + t2 + (sH - s1 - s2) / v3
+    }
 }
 
 /**
@@ -101,12 +101,8 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int {
-    var w1 = false
-    var w2 = false
-    if ((bishopX - bishopY == kingX - kingY) || (bishopX + bishopY == kingX + kingY))
-        w1 = true
-    if (kingX == rookX || kingY == rookY)
-        w2 = true
+    val w1 = ((bishopX - bishopY == kingX - kingY) || (bishopX + bishopY == kingX + kingY))
+    val w2 = (kingX == rookX || kingY == rookY)
     return when {
         !w1 && !w2 -> 0
         w1 && w2 -> 3
@@ -125,7 +121,7 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
     fun sqr(x: Double) = x * x
-     return when {
+    return when {
         ((a > b + c) || (b > a + c) || (c > a + b)) -> -1
         ((sqr(a) == sqr(b) + sqr(c)) || (sqr(b) == sqr(a) + sqr(c)) || (sqr(c) == sqr(b) + sqr(a))) -> 1
         ((sqr(a) > sqr(b) + sqr(c)) || (sqr(b) > sqr(a) + sqr(c)) || (sqr(c) > sqr(b) + sqr(a))) -> 2

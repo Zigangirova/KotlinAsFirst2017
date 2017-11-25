@@ -35,7 +35,7 @@ fun isPrime(n: Int): Boolean {
  */
 fun isPerfect(n: Int): Boolean {
     var sum = 1
-    for (m in 2..n/2) {
+    for (m in 2..n / 2) {
         if (n % m > 0) continue
         sum += m
         if (sum > n) break
@@ -80,8 +80,9 @@ fun digitNumber(n: Int): Int {
 fun fib(n: Int): Int {
     val a = 1.0 / 2.0
     val b = Math.sqrt(5.0) / 2.0
-    return((Math.pow(a + b, n.toDouble()) - Math.pow(a - b, n.toDouble())) / Math.sqrt(5.0)).toInt()
+    return ((Math.pow(a + b, n.toDouble()).toInt()) - (Math.pow(a - b, n.toDouble()) / Math.sqrt(5.0)).toInt())
 }
+
 /**
  * Простая
  *
@@ -106,10 +107,10 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    for (d in 2..Math.ceil(Math.sqrt(n.toDouble())).toInt()){
+    for (d in 2..Math.ceil(Math.sqrt(n.toDouble())).toInt()) {
         if (n % d == 0)
             return d
-        }
+    }
     return n
 }
 
@@ -147,7 +148,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = Math.ceil(Math.sqrt(m.toDouble())) <= Math.sqrt(n.toDouble())
+fun squareBetweenExists(m: Int, n: Int): Boolean = (Math.sqrt(m.toDouble())).toInt() <= Math.sqrt(n.toDouble()).toInt()
 
 
 /**

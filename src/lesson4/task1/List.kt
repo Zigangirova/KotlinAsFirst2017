@@ -289,7 +289,7 @@ fun decimalFromString(str: String, base: Int): Int {
         if (str[i] in '0'..'9')
             a.add(str[i] - '0') else a.add(str[i] - 'a' + 10)
     }
-    return if (str.length == 1) a[0] else decimal(a, base)
+    return decimal(a, base)
 }
 
 /**
