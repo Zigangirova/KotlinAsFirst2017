@@ -130,7 +130,7 @@ fun flattenPhoneNumber(phone: String): String {
         result.append("+")
     }
     for (k in phone) {
-        if (k.toString() in "0".."9") {
+        if (k in '0'..'9') {
             result.append(k)
         } else if (k.toString() !in symbols) {
             return ""
@@ -197,8 +197,8 @@ fun bestHighJump(jumps: String): Int {
  */
 fun plusMinus(expression: String): Int {
     val equations = expression.split(" ")
-    var result = equations[0].toInt()
     try {
+        var result = equations[0].toInt()
         for (i in 1 until equations.size step 2) {
             val num = equations[i + 1].toInt()
             result += when (equations[i]) {

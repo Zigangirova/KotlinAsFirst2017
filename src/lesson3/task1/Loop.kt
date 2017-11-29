@@ -77,11 +77,7 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int {
-    val a = 1.0 / 2.0
-    val b = Math.sqrt(5.0) / 2.0
-    return ((Math.pow(a + b, n.toDouble()).toInt()) - (Math.pow(a - b, n.toDouble()) / Math.sqrt(5.0)).toInt())
-}
+fun fib(n: Int): Int = (Math.pow(((Math.sqrt(5.0) + 1) / 2), n.toDouble()) / Math.sqrt(5.0) + 0.5).toInt()
 
 /**
  * Простая
@@ -148,7 +144,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = (Math.sqrt(m.toDouble())).toInt() <= Math.sqrt(n.toDouble()).toInt()
+fun squareBetweenExists(m: Int, n: Int): Boolean = Math.ceil(Math.sqrt(m.toDouble())) <= Math.floor(Math.sqrt(n.toDouble()))
 
 
 /**
@@ -257,10 +253,9 @@ fun squareSequenceDigit(n: Int): Int {
 fun fibSequenceDigit(n: Int): Int {
     var a = 1
     var b = n
-    var fib: Int
     var str = ""
     while (b > 0) {
-        fib = fib(a)
+        val fib = fib(a)
         str = "$fib"
         a++
         b -= str.length

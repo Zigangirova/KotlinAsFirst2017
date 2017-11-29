@@ -168,8 +168,8 @@ fun times(a: List<Double>, b: List<Double>): Double {
 fun polynom(p: List<Double>, x: Double): Double {
     var sum = 0.0
     var a = 0.0
-    for (elem in p) {
-        sum += elem * Math.pow(x, a)
+    for (elNumb in 0 until p.size) {
+        sum += p[elNumb] * Math.pow(x,elNumb.toDouble())
         a++
     }
     return sum
