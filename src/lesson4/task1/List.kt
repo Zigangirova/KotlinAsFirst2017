@@ -169,7 +169,7 @@ fun polynom(p: List<Double>, x: Double): Double {
     var sum = 0.0
     var a = 0.0
     for (elNumb in 0 until p.size) {
-        sum += p[elNumb] * Math.pow(x,elNumb.toDouble())
+        sum += p[elNumb] * Math.pow(x, elNumb.toDouble())
         a++
     }
     return sum
@@ -322,4 +322,54 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+val units = listOf("", "один", "два", "три", "четыре", "пять", "шесть",
+        "семь", "восемь", "девять")
+val twoDigits = listOf("", "одиннадцать", "двенадцать", "тринадцать",
+        "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать")
+val dozen = listOf("", "десять", "двадцать", "тридцать", "сорок", "пятьдесят",
+        "шестьдесят", "семьдесят", "восемьдесят", "девяносто")
+val hundreds = listOf("", "сто", "двести", "триста", "четыреста", "пятьсот",
+        "шестьсот", "семьсот", "восемьсот", "девятьсот")
+
+
+fun russian(n: Int): String {
+    val result = mutableListOf<String>()
+    val a = n / 1000
+
+    val b = when (a % 10) {
+        1 -> "одна"
+        2 -> "две"
+        else -> units[a % 10]
+    }
+
+    val c = when (a % 10) {
+        1 -> "тысяча"
+        in 2..4 -> "тысячи"
+        else -> "тысяч"
+    }
+
+    if (a > 0) {
+        result.add(hundreds[n / 100000 % 10])
+        if (a % 100 in 11..19) {
+            result.add(twoDigits[a % 10])
+            result.add("тысяч")
+        } else {
+            result.add(dozen[n / 10000 % 10])
+            result.add(b)
+            result.add(c)
+        }
+    }
+
+    val d = n % 1000
+
+    if (d > 0) {
+        result.add(hundreds[n / 100 % 10])
+        if (n % 100 in 11..19) result.add(twoDigits[n % 10])
+        else {
+            result.add(dozen[n / 10 % 10])
+            result.add(units[n % 10])
+        }
+    }
+
+    return result.filter { it != "" }.joinToString(" ")
+}
