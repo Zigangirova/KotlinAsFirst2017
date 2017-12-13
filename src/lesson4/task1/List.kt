@@ -167,10 +167,8 @@ fun times(a: List<Double>, b: List<Double>): Double {
  */
 fun polynom(p: List<Double>, x: Double): Double {
     var sum = 0.0
-    var a = 0.0
     for (elNumb in 0 until p.size) {
         sum += p[elNumb] * Math.pow(x, elNumb.toDouble())
-        a++
     }
     return sum
 }
@@ -287,7 +285,8 @@ fun decimalFromString(str: String, base: Int): Int {
     val a = mutableListOf<Int>()
     for (i in 0 until str.length) {
         if (str[i] in '0'..'9')
-            a.add(str[i] - '0') else a.add(str[i] - 'a' + 10)
+            a.add(str[i] - '0')
+        else a.add(str[i] - 'a' + 10)
     }
     return decimal(a, base)
 }

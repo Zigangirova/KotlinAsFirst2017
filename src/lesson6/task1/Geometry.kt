@@ -109,16 +109,17 @@ fun diameter(vararg points: Point): Segment {
     var point = Pair(0, 0)
     var maxDistance = 0.0
     val size = points.size
+    if (points.size < 2) {
+        throw IllegalArgumentException()
+    }
     for (i in 0 until size) {
         for (k in i + 1 until size) {
-            if (maxDistance < points[i].distance(points[k])) {
-                maxDistance = points[i].distance(points[k])
+            val a = points[i].distance(points[k])
+            if (maxDistance < a) {
+                maxDistance = a
                 point = Pair(i, k)
             }
         }
-    }
-    if (points.size < 2) {
-        throw IllegalArgumentException()
     }
     return Segment(points[point.first], points[point.second])
 }
@@ -176,13 +177,7 @@ class Line private constructor(val b: Double, val angle: Double) {
  *
  * Построить прямую по отрезку
  */
-fun lineBySegment(s: Segment): Line {
-    var arctg = Math.atan2((s.end.y - s.begin.y), (s.end.x - s.begin.x))
-    if (arctg < 0 || arctg > Math.PI) {
-        arctg += Math.PI
-    }
-    return Line(s.begin, arctg)
-}
+fun lineBySegment(s: Segment): Line = Line(s.begin, Math.atan2(s.end.y - s.begin.y, s.end.x - s.begin.x))
 
 /**
  * Средняя
@@ -211,8 +206,9 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
     var result = Pair(circles[0], circles[1])
     for (i in 0 until circles.size)
         for (j in i + 1 until circles.size) {
-            if (circles[i].distance(circles[j]) < min) {
-                min = circles[i].distance(circles[j])
+            val a = circles[i].distance(circles[j])
+            if (a < min) {
+                min = a
                 result = Pair(circles[i], circles[j])
             }
         }
