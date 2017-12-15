@@ -92,8 +92,6 @@ data class Circle(val center: Point, val radius: Double) {
  * Отрезок между двумя точками
  */
 data class Segment(val begin: Point, val end: Point) {
-    fun center(): Point =
-            Point(begin.x + (end.x - begin.x) / 2, begin.y + (end.y - begin.y) / 2)
 
     override fun equals(other: Any?) =
             other is Segment && (begin == other.begin && end == other.end || end == other.begin && begin == other.end)
@@ -199,12 +197,9 @@ fun lineByPoints(a: Point, b: Point): Line {
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
 
-fun bisectorByPoints(a: Point, b: Point): Line {
-    val line = lineByPoints(a, b).angle
-    val segment = Segment(a, b).center()
-    return if (line < Math.PI / 2) Line(segment, line + Math.PI / 2)
-    else Line(segment, line - Math.PI / 2)
-}
+fun bisectorByPoints(a: Point, b: Point): Line =
+        Line(Point((a.x + b.x) / 2, (a.y + b.y) / 2), (Math.PI / 2 + lineByPoints(a, b).angle) % Math.PI)
+
 
 /**
  * Средняя
@@ -236,13 +231,7 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
  * (построить окружность по трём точкам, или
  * построить окружность, описанную вокруг треугольника - эквивалентная задача).
  */
-fun circleByThreePoints(a: Point, b: Point, c: Point): Circle {
-    val line1 = bisectorByPoints(a, b)
-    val line2 = bisectorByPoints(b, c)
-    val center = line1.crossPoint(line2)
-    val radius = center.distance(a)
-    return Circle(center, radius)
-}
+fun circleByThreePoints(a: Point, b: Point, c: Point): Circle = TODO()
 
 /**
  * Очень сложная
